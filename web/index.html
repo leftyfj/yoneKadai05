@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini PosSystem</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <h1 class="text-center">ミニポスシステム</h1>
+    <h2 class="mb-3">商品一覧</h2>
+    <table class="item_list table table-sm" style="table-layout:fixed;">
+      <thead>
+        <tr class="table-primary">
+          <th class="text-center" style="width:20%;">商品コード</th>
+          <th class="text-center" style="width:40%;">商品名</th>
+          <th class="text-center" style="width:40%;">価格</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td id="item_name" class="item_name text-center">りんご</td>
+          <td class="item_price text-right">200円</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 class="mb-3">注文明細</h2>
+     <table class="item_list table table-sm" style="table-layout:fixed;">
+      <thead>
+        <tr class="table-secondary">
+          <th class="text-center">商品コード</th>
+          <th class="text-center">商品名</th>
+          <th class="text-center">単価</th>
+          <th class="text-center">数量</th>
+          <th class="text-center">金額</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td class="text-center">りんご</td>
+          <td class="text-right">200円</td>
+          <td class="text-right">3</td>
+          <td class="text-right">600円</td>
+        </tr>
+      </tbody>
+    </table>
+    <input type="button" value="商品マスタを取得する" onclick="get_culc()">
+ 
+  </div><!-- /.container -->
+  <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+   
+   async function run () {
+     const result = document.getElementsByClassName('item_name');
+     let item_master = await eel.get_item_master()();
+
+     
+     console.log(item_master);
+     result[0].textContent= item_master;
+   }
+
+   run();
+  </script>  
+</body>
+</html>
