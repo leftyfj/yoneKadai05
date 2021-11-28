@@ -52,7 +52,6 @@ class ItemsMaster:
 class Order:
     def __init__(self, item_master_file_path):
         self.item_order_list = []
-        # self.item_master = item_master
         self.item_order_list_detail = []
         self.item_master_file_path = item_master_file_path
     # ４

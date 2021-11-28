@@ -13,6 +13,7 @@ from config import *
 os.makedirs(os.path.dirname(TRANSACTION_FILE_PATH), exist_ok=True)
 os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
 
+global this_order
   
 @eel.expose
 def get_item_master():
@@ -29,8 +30,9 @@ def show_order_detail():
 @eel.expose
 def add_order(item_code, quantity):
   # Order(ITEMS_MASTER_PATH).add_item_order(item_code, quantity)
-  order_name.add_item_order(item_code, quantity)
-  print(item_code, quantity)
+  global this_order
+  this_order.add_item_order(item_code, quantity)
+  print(this_order.view_item_list())
 
 
 ### メイン処理
@@ -38,10 +40,13 @@ def main():
   try:
     functions.make_log('開始')
     eel.init("web")
+    #オーダークラスをインスタンス化
+    global this_order
+    this_order = Order(ITEMS_MASTER_PATH)
+    
     eel.start("index.html", size=(600,600))
 
-    #オーダークラスをインスタンス化しました。
-    this_order = Order(ITEMS_MASTER_PATH)
+    
   except:           
     print('操作に誤りがありました。終了します。')
     functions.make_log('例外発生')
