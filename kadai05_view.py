@@ -25,7 +25,7 @@ def show_order_detail():
     list, totalamount = Order(ITEMS_MASTER_PATH).make_order_detail()
     return list, totalamount
 
-
+#Javascriptから呼び出したい関数です
 @eel.expose
 def add_order(item_code, quantity):
   # Order(ITEMS_MASTER_PATH).add_item_order(item_code, quantity)
@@ -40,6 +40,8 @@ def main():
     eel.init("web")
     eel.start("index.html", size=(600,600))
 
+    #オーダークラスをインスタンス化しました。
+    this_order = Order(ITEMS_MASTER_PATH)
   except:           
     print('操作に誤りがありました。終了します。')
     functions.make_log('例外発生')

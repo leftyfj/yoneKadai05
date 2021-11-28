@@ -127,11 +127,13 @@
 
    order_detail()
 
+  
+  //pythonのadd_order関数に商品codeと数量を渡したい関数です。
   eel.expose(clickHandler)
   function clickHandler() {
     code = document.getElementById('code').value;
     quantity = Number(document.getElementById('quantity').value);
-    let list = [code, quantity]
+   
     eel.add_order(code, quantity);
 
   }
