@@ -140,3 +140,4 @@ cython_debug/
 画面設計.xlsx
 log/
 transaction/
+view.py

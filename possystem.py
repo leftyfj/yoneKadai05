@@ -50,17 +50,17 @@ class ItemsMaster:
 
 ### オーダークラス
 class Order:
-    def __init__(self, item_master):
+    def __init__(self, item_master_file_path):
         self.item_order_list = []
-        self.item_master = item_master
+        # self.item_master = item_master
         self.item_order_list_detail = []
-
+        self.item_master_file_path = item_master_file_path
     # ４
     #オーダー登録時に個数も登録できるようにしてください
     def add_item_order(self, item_code, quantity):
         one_order = [item_code, quantity]
         self.item_order_list.append(one_order)
-
+        return self.item_order_list
     #注文一覧を表示するメソッド
     def view_item_list(self):
         print('### 注文表 ###')
@@ -80,7 +80,7 @@ class Order:
 
     #オーダー明細、合計金額をリスト化するメソッド
     def make_order_detail(self):
-        item_master = ItemsMaster().get_master()
+        item_master = ItemsMaster(self.item_master_file_path).get_master()
         self.item_order_list_detail = []
         self.total_amount = 0
         for order in self.item_order_list:

@@ -13,50 +13,56 @@
   <div class="container">
 
     <h1 class="text-center">ミニポスシステム</h1>
-    <h2 class="mb-3">商品一覧</h2>
-    <table class="item_list table table-sm" style="table-layout:fixed;">
-      <thead>
-        <tr class="table-primary">
-          <th class="text-center" style="width:20%;">商品コード</th>
-          <th class="text-center" style="width:40%;">商品名</th>
-          <th class="text-center" style="width:40%;">価格</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td id="item_name" class="item_name text-center">りんご</td>
-          <td class="item_price text-right">200円</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2 class="mb-3">注文明細</h2>
-     <table class="item_list table table-sm" style="table-layout:fixed;">
-      <thead>
-        <tr class="table-secondary">
-          <th class="text-center">商品コード</th>
-          <th class="text-center">商品名</th>
-          <th class="text-center">単価</th>
-          <th class="text-center">数量</th>
-          <th class="text-center">金額</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td class="text-center">りんご</td>
-          <td class="text-right">200円</td>
-          <td class="text-right">3</td>
-          <td class="text-right">600円</td>
-        </tr>
-      </tbody>
-    </table>
- 
+    <div class="item_area bg-secondary py-4">
+      <h2 class="mb-3">商品一覧</h2>
+      <table id="item_master_list" class="table table-sm" style="width:500px; table-layout:fixed;">
+        <thead>
+          <tr class="table-primary">
+            <th class="text-center" style="width:20%;">商品コード</th>
+            <th class="text-center" style="width:60%;">商品名</th>
+            <th class="text-center" style="width:20%;">価格</th>
+          </tr>
+        </thead>
+        <tbody id="item_master_list_tbody">
+          
+        </tbody>
+      </table>
+    </div><!-- /.item_area -->
+    <div class="input_area bg-info py-4">
+      <h2 class="mb-3">注文入力</h2>
+      <label for="code" class="mr-5">商品コード
+        <input type="text" name="code" id="code">
+      </label>
+      <label for="">数量
+        <input type="number" id="quantity">
+      </label>
+      <input type="button" class="btn ml-5" value="追加" onclick="clickHandler()">
+    </div><!-- /.input_area -->
+      <div class="detail_area bg-danger py-4">
+        <h2 class="mb-3">注文明細</h2>
+        <table class="item_list table table-sm" style="table-layout:fixed;">
+          <thead>
+          <tr class="table-secondary">
+            <th class="text-center">商品コード</th>
+            <th class="text-center">商品名</th>
+            <th class="text-center">単価</th>
+            <th class="text-center">数量</th>
+            <th class="text-center">金額</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr>
+            <th scope="row">1</th>
+            <td class="text-center">りんご</td>
+            <td class="text-right">200円</td>
+            <td class="text-right">3</td>
+            <td class="text-right">600円</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div><!-- /.detail_area -->
+
+   
   </div><!-- /.container -->
   <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -65,12 +71,72 @@
      const result = document.getElementsByClassName('item_name');
      let item_master = await eel.get_item_master()();
 
-     
-     console.log(item_master);
-     result[0].textContent= item_master;
+      let tbl = document.getElementById('item_master_list')
+
+      let tblBody = document.getElementById("item_master_list_tbody");
+
+    // creating all cells
+    for (var i = 0; i < item_master.length; i++) {
+      // creates a table row
+      var row = document.createElement("tr");
+
+      for (var j = 0; j < item_master[0].length; j++) {
+        // Create a <td> element and a text node, make the text
+        // node the contents of the <td>, and put the <td> at
+        // the end of the table row
+        var cell = document.createElement("td");
+        cell.className = 'text-center'
+        
+        var cellText = document.createTextNode(item_master[i][j]);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+      }
+
+      // add the row to the end of the table body
+      tblBody.appendChild(row);
+
+
+    }
+
+
+    // put the <tbody> in the <table>
+    tbl.appendChild(tblBody);
+
+    item_table=document.getElementById('item_master_list');
+    cells = item_table.getElementsByTagName('td')
+    for(let i = 0; i < cells.length; i++) {
+      if(i % 3 == 2) {
+        console.log(cells[i]);
+        cells[i].className = 'text-right';
+      }
+      
+    }
+
+ 
    }
 
    run();
+
+
+  
+
+   async function order_detail() {
+    let {order_detail, total_amount} = eel.show_order_detail()
+    console.log(total_amount)
+   }
+
+   order_detail()
+
+  eel.expose(clickHandler)
+  function clickHandler() {
+    code = document.getElementById('code').value;
+    quantity = Number(document.getElementById('quantity').value);
+    let list = [code, quantity]
+    eel.add_order(code, quantity);
+
+  }
+  
+  
   </script>  
 </body>
 </html>
