@@ -6,3 +6,14 @@ table > tbody > tr > th {
   margin: 0 auto;
   width: 80%;
 }
+
+.total_amount {
+  width:200px;
+  margin-left: 500px;
+}
+.total_amount,
+#show_total_amount,
+.yen_mark {
+  font-size: 20px;
+
+}
