@@ -36,14 +36,15 @@
       <label for="">数量
         <input type="number" id="quantity">
       </label>
-      <input type="button" class="btn ml-5" value="追加" onclick="clickOrder()">
+      <input type="button" class="btn btn-primary ml-5" value="注文を追加" onclick="clickOrder()">
     </div><!-- /.input_area -->
 
       <div class="detail_area py-4">
         <h2 class="d-inline-block mb-3 mr-5">注文明細</h2>
         <p class="total_amount d-inline-block mb-3 ml-5 mr-3">合計金額</p>
         <p id="show_total_amount" class="d-inline"></p><p class="yen_mark d-inline">円</p>
-        <table class="order_list_detail table table-sm" style="table-layout:fixed;">
+         <input type="button" class="d-inlin-block btn btn-warning ml-5" value="注文をキャンセル" onclick="clickCancel()">
+        <table id="order_list_detail" class="order_list_detail table table-sm" style="table-layout:fixed;">
           <thead>
           <tr class="table-secondary">
             <th class="text-center">商品コード</th>
@@ -61,106 +62,12 @@
     <div class="checkout_area py-4">
        <h2 class="mb-3">会計</h2>
       <input type="text" name="deposit" id="deposit">円
-      <input type="button" class="btn ml-5" value="会計" onclick="clickCheckout()">
+      <input type="button" class="btn btn-info ml-5" value="会計" onclick="clickCheckout()">
     </div><!-- /.checkout_area -->
    
   </div><!-- /.container -->
   <script src="js/bootstrap.min.js"></script>
-<script type="text/javascript">
-  let total_amount;
-   async function show_item_master() {
-     const result = document.getElementsByClassName('item_name');
-     let item_master = await eel.get_item_master()();
-     //item_master = await eel.get_item_master()();
-      let tbl = document.getElementById('item_master_list')
-      let tblBody = document.getElementById("item_master_list_tbody");
-    // creating all cells
-      for (var i = 0; i < item_master.length; i++) {
-      // creates a table row
-        var row = document.createElement("tr");
-
-        for (var j = 0; j < item_master[0].length; j++) {
-          var cell = document.createElement("td");
-          cell.className = 'text-center'
-          
-          var cellText = document.createTextNode(item_master[i][j]);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-        }
-   
-        tblBody.appendChild(row);
-      }
-    tbl.appendChild(tblBody);
-
-    item_table=document.getElementById('item_master_list');
-    cells = item_table.getElementsByTagName('td')
-    for(let i = 0; i < cells.length; i++) {
-      if(i % 3 == 2) {
-        console.log(cells[i]);
-        cells[i].className = 'text-right';
-      }
-    }
-   }
-   show_item_master();
-
-  eel.expose(clickOrder)
-  async function clickOrder() {
-    code = document.getElementById('code').value;
-    quantity = Number(document.getElementById('quantity').value);
-    let item_master = await eel.get_item_master()();
-    flag = 0;
-    for(let i = 0; i < item_master.length; i++) {
-      if(item_master[i][0] == code) {
-         eel.add_order(code, quantity);
-          flag = 1
-          break;
-      } 
-
-    }
-    if(flag == 0) {
-      alert('入力された商品コードの商品は登録されていません。');
-    } else {
-      let [total_amount,order_list_detail] = await eel.show_order_detail_on_html()();
-
-    
-      let tbl2 = document.getElementById('order_list_detail');
-      let tblBody2 = document.getElementById('order_list_detail_tbody');
-
-      let lastRow = order_list_detail[order_list_detail.length -1];
-      row = document.createElement("tr");
-      for(i = 0; i < lastRow.length; i++) {
-        cell = document.createElement("td");
-        if((typeof lastRow[i] === 'number') && (isFinite(lastRow[i]))){
-          cell.className = 'text-right'
-          cellText = document.createTextNode(lastRow[i].toLocaleString());
-        } else {
-          cell.className = 'text-center'
-          cellText = document.createTextNode(lastRow[i]);
-        }
-
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-      }
-      tblBody2.appendChild(row);
-      //tbl2.appendChild(tbl2Body);
-
-      document.getElementById('show_total_amount').innerHTML = total_amount.toLocaleString();
-
-    }
-
-   
-  }
-  
-eel.expose(clickCheckout)
-function clickCheckout() {
-  let deposit = document.getElementById('deposit').value;
-  eel.order_checkout(deposit);
-}
-
-eel.expose(alertJs)
-function alertJs(text){
-  alert(text);
-}
-  </script>  
+  <script type="text/javascript" src="js/main.js">
+  </script>
 </body>
 </html>

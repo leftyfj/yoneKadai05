@@ -94,3 +94,7 @@ class Order:
                         [code, name, price, quantity, amount])
                     self.total_amount += amount
         return self.item_order_list_detail, self.total_amount
+
+    def cancel_order_all(self):
+        self.item_order_list = []
+        self.item_order_list_detail = []
