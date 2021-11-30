@@ -36,7 +36,7 @@
       <label for="">数量
         <input type="number" id="quantity">
       </label>
-      <input type="button" class="btn ml-5" value="追加" onclick="clickHandler()">
+      <input type="button" class="btn ml-5" value="追加" onclick="clickOrder()">
     </div><!-- /.input_area -->
 
       <div class="detail_area py-4">
@@ -58,11 +58,16 @@
         </tbody>
       </table>
     </div><!-- /.detail_area -->
-
+    <div class="checkout_area py-4">
+       <h2 class="mb-3">会計</h2>
+      <input type="text" name="checkout" id="checkout">円
+      <input type="button" class="btn ml-5" value="会計" onclick="clickCheckout()">
+    </div><!-- /.checkout_area -->
    
   </div><!-- /.container -->
   <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
+  let total_amount;
    async function show_item_master() {
      const result = document.getElementsByClassName('item_name');
      let item_master = await eel.get_item_master()();
@@ -98,8 +103,8 @@
    }
    show_item_master();
 
-  eel.expose(clickHandler)
-  async function clickHandler() {
+  eel.expose(clickOrder)
+  async function clickOrder() {
     code = document.getElementById('code').value;
     quantity = Number(document.getElementById('quantity').value);
     let item_master = await eel.get_item_master()();
@@ -146,7 +151,11 @@
    
   }
   
-  
+eel.expose(clickCheckout)
+function clickCheckout() {
+  console.log("チェックアウトボタンが押されました。");
+  eel.order_checkout();
+}
   </script>  
 </body>
 </html>

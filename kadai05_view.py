@@ -15,6 +15,7 @@ os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
 
 global this_order
 global item_master
+global total_amount
 
 @eel.expose
 def get_item_master():
@@ -44,10 +45,16 @@ def show_order_detail_on_html():
   return total_amount, order_list_detail
 
 
+@eel.expose
+def order_checkout():
+  print("チェックアウトします")
+
+  
 ### メイン処理
 def main():
   global this_order
   global item_master
+  global total_amount
   try:
     functions.make_log('開始')
     eel.init("web")
