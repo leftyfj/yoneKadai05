@@ -60,7 +60,7 @@
     </div><!-- /.detail_area -->
     <div class="checkout_area py-4">
        <h2 class="mb-3">会計</h2>
-      <input type="text" name="checkout" id="checkout">円
+      <input type="text" name="deposit" id="deposit">円
       <input type="button" class="btn ml-5" value="会計" onclick="clickCheckout()">
     </div><!-- /.checkout_area -->
    
@@ -153,8 +153,13 @@
   
 eel.expose(clickCheckout)
 function clickCheckout() {
-  console.log("チェックアウトボタンが押されました。");
-  eel.order_checkout();
+  let deposit = document.getElementById('deposit').value;
+  eel.order_checkout(deposit);
+}
+
+eel.expose(alertJs)
+function alertJs(text){
+  alert(text);
 }
   </script>  
 </body>

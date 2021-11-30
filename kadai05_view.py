@@ -39,6 +39,7 @@ def add_order(item_code, quantity):
 
 @eel.expose
 def show_order_detail_on_html():
+  global total_amount
   order_list_detail, total_amount = this_order.make_order_detail()
   print(total_amount)
   print(order_list_detail)
@@ -46,9 +47,16 @@ def show_order_detail_on_html():
 
 
 @eel.expose
-def order_checkout():
-  print("チェックアウトします")
-
+def order_checkout(deposit):
+  global total_amount
+  deposit = int(deposit)
+  change = deposit - total_amount
+  if change <=0:
+    text = 'お買い上げ金額に足りません。'
+    eel.alertJs(text)
+  else:
+    text = f'毎度ありがとうございます。\nお買い上げ金額{total_amount:,}円\nお預かり{deposit:,}円\nお釣りは{change:,}円です。'
+    eel.alertJs(text)
   
 ### メイン処理
 def main():
