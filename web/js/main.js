@@ -1,27 +1,21 @@
- let total_amount;
- 
-   async function show_item_master() {
-     const result = document.getElementsByClassName('item_name');
-     let item_master = await eel.get_item_master()();
-     //item_master = await eel.get_item_master()();
-      let tbl = document.getElementById('item_master_list')
-      let tblBody = document.getElementById("item_master_list_tbody");
-    // creating all cells
-      for (var i = 0; i < item_master.length; i++) {
-      // creates a table row
-        var row = document.createElement("tr");
-
-        for (var j = 0; j < item_master[0].length; j++) {
-          var cell = document.createElement("td");
-          cell.className = 'text-center'
-          
-          var cellText = document.createTextNode(item_master[i][j]);
-          cell.appendChild(cellText);
-          row.appendChild(cell);
-        }
-   
-        tblBody.appendChild(row);
+let total_amount;
+let item_master = [];
+async function show_item_master() {
+    //  const result = document.getElementsByClassName('item_name');
+  let item_master = await eel.get_item_master()();
+  let tbl = document.getElementById('item_master_list')
+  let tblBody = document.getElementById("item_master_list_tbody");
+    for (var i = 0; i < item_master.length; i++) {
+      let row = document.createElement("tr");
+      for (let j = 0; j < item_master[0].length; j++) {
+        let cell = document.createElement("td");
+        cell.className = 'text-center'
+        let cellText = document.createTextNode(item_master[i][j]);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
       }
+      tblBody.appendChild(row);
+    }
     tbl.appendChild(tblBody);
 
     item_table=document.getElementById('item_master_list');
@@ -32,8 +26,11 @@
         cells[i].className = 'text-right';
       }
     }
+
+    return item_master;
    }
-   show_item_master();
+
+show_item_master();
 
 eel.expose(clickOrder)
 async function clickOrder() {
@@ -47,14 +44,11 @@ async function clickOrder() {
           flag = 1
           break;
       } 
-
     }
     if(flag == 0) {
       alert('入力された商品コードの商品は登録されていません。');
     } else {
       let [total_amount,order_list_detail] = await eel.show_order_detail_on_html()();
-
-    
       let tbl2 = document.getElementById('order_list_detail');
       let tblBody2 = document.getElementById('order_list_detail_tbody');
 
