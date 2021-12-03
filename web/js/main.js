@@ -3,7 +3,6 @@ let item_master = [];
 
 // 商品リストの表示
 async function show_item_master() {
-    //  const result = document.getElementsByClassName('item_name');
   let item_master = await eel.get_item_master()();
   let tbl = document.getElementById('item_master_list')
   let tblBody = document.getElementById("item_master_list_tbody");
@@ -45,8 +44,7 @@ async function clickOrder() {
     eel.add_order(code, quantity);
     // 注文詳細を更新
     let [total_amount,order_list_detail] = await eel.show_order_detail_on_html()();
-    // console.log(order_list_detail);
-    // console.log(total_amount);
+  
     make_order_detail_table('order_list_detail_tbody',total_amount, order_list_detail);
   }else {
     text = '入力された商品コードの商品は登録されていません。';
@@ -77,6 +75,7 @@ async function clickCheckout() {
   }
 }
 
+// 注文明細の表示
 function make_order_detail_table(tablebodyid, amount, list) {
   let tableBody = document.getElementById(tablebodyid);
   let lastRow = list[list.length-1];
@@ -100,6 +99,7 @@ function make_order_detail_table(tablebodyid, amount, list) {
   document.getElementById('quantity').value = '';
 }
 
+// 注文明細の画面クリア
 function clear_data_on_table(){
   let tableElm = document.getElementById('order_list_detail');
   let rowLen = tableElm.rows.length;
@@ -135,6 +135,7 @@ function check_item_in_master(val, master) {
   return flag;
 }
 
+// アラート
 eel.expose(alertJs)
 function alertJs(text){
   alert(text);
