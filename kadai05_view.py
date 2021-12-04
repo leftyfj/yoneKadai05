@@ -1,6 +1,7 @@
 #開始
 import eel
 import os
+import sys
 import functions
 from possystem import Item
 from possystem import Order
@@ -38,8 +39,6 @@ def show_order_detail_on_html():
   global total_amount
   global order_list_detail
   order_list_detail, total_amount = this_order.make_order_detail()
-  # print(total_amount)
-  # print(order_list_detail)
   return total_amount, order_list_detail
 
 @eel.expose
@@ -60,7 +59,6 @@ def order_checkout(deposit):
   except:
     functions.has_error()
   
-
 @eel.expose
 def cancel_order():
   global this_order
@@ -83,6 +81,16 @@ def make_transaction_log(detail,deposit,change):
     print(f'入金:{deposit:,}円', file=file)
     print(f'釣り:{change:,}円' + '\n', file=file)
 
+@eel.expose
+def quit_program():
+  functions.make_log('プログラムを終了しました。')
+  sys.exit()
+  
+# def onClickWindow(page, sockets):
+#   text = f'{page}が閉じられました。プログラムを終了しました。'
+#   functions.make_log(text)
+#   sys.exit()
+  
 ### メイン処理
 def main():
   global this_order
@@ -102,7 +110,7 @@ def main():
     eel.start("index.html", size=(900,600))
 
     
-  except:           
+  except:     
     print('操作に誤りがありました。終了します。')
     functions.has_error()
 

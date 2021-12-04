@@ -68,6 +68,11 @@ async function clickCheckout() {
   }
 }
 
+//アプリ終了
+function clickQuit(){
+  eel.quit_program();
+
+ }
 // 注文明細の表示
 function make_order_detail_table(tablebodyid, amount, list) {
   let tableBody = document.getElementById(tablebodyid);
