@@ -43,46 +43,40 @@ function make_table_row(list) {
   return tr;
 }
 
+
+
 async function clickCU() {
-  let item_master = await eel.get_item_master()();
-  console.log(item_master);
+
   let item_code = document.getElementById('code').value;
   let item_name = document.getElementById('name').value;
   let item_price= document.getElementById('price').value;
-  if(check_blanc('商品コード', item_code)) {
-    if(check_blanc('商品名', item_name)) {
-      if(check_blanc('価格', item_price)) {
-        item_price = Number(item_price);
-         if(check_int('価格', item_price)) {
-           console.log('あそこ');
-           console.log('全てOK');
-           alert('全てOK');
-         }
-         
+
+  let res =  await eel.check_duplicate(item_code)();
+
+  // console.log('結果' + res);
+  if(check_blanc('商品コード', item_code) ){
+    if(res) {
+      text = '商品コードが重複しています。';
+      alert(text);
+    } else {
+      if(check_blanc('商品名', item_name)) {
+        if(check_blanc('価格', item_price)) {
+          item_price = Number(item_price);
+          if(check_int('価格', item_price)) {
+            console.log('全てOK');
+          }
+        }
       }
     }
   }
-
-
-  //   let item_name = document.getElementById('name').value;
-   
-  //   if(check_blanc('商品名', item_name)) {
-  //     let item_price= document.getElementById('price').value;
-  //     if(check_blanc('価格', item_price)) {
-  //         item_price = Number(item_price)
-  //         console.log(item_price);
-  //         console.log(typeof(item_price));
-  //       if(check_int('価格', item_price)) {
-  //         console.log('OK');
-  //         alert('OK!');
-  //       }else {
-  //         console.log('NO');
-  //       }
-  //     };
-  //   }
-  // };
 };
   
+// async function check_duplicate(val) {
+//   let res = await eel.check_duplicate(val)();
+//   console.log(res);
+//   return res
+// }
+
 
 
 // バリデーション

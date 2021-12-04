@@ -20,6 +20,19 @@ def get_item_master():
     item_master = ItemsMaster(ITEMS_MASTER_PATH).get_master()
     return item_master
 
+@eel.expose
+def check_duplicate(val):
+  global item_master
+  item_code_list = ItemsMaster(ITEMS_MASTER_PATH).get_item_code_list()
+  if val in item_code_list:
+    print(True)
+    return True
+  else:
+    print(False)
+    return False
+    
+    
+
 ### メイン処理
 def main():
   

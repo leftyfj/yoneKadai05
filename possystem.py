@@ -40,6 +40,7 @@ class ItemsMaster:
     def __init__(self, item_master_file_path) -> None:
         self.item_master = []
         self.item_master_file_path = item_master_file_path
+        self.item_code_list = []
 
     def get_master(self):
         with open(self.item_master_file_path, 'r', encoding='utf-8_sig', newline='') as file:
@@ -48,6 +49,14 @@ class ItemsMaster:
                 self.item_master.append(row)
         return self.item_master
 
+    def get_item_code_list(self):
+        self.item_master = self.get_master()
+        items_count = len(self.item_master)
+        for i in range(0, items_count):
+            code = self.item_master[i][0]
+            self.item_code_list.append(code)
+        return self.item_code_list
+        
 ### オーダークラス
 class Order:
     def __init__(self, item_master_file_path):
