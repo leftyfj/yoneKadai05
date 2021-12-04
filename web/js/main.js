@@ -7,14 +7,7 @@ async function show_item_master() {
   let tbl = document.getElementById('item_master_list')
   let tblBody = document.getElementById("item_master_list_tbody");
     for (var i = 0; i < item_master.length; i++) {
-      let row = document.createElement("tr");
-      for (let j = 0; j < item_master[0].length; j++) {
-        let cell = document.createElement("td");
-        cell.className = 'text-center'
-        let cellText = document.createTextNode(item_master[i][j]);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-      }
+      row = make_table_row(item_master[i]);
       tblBody.appendChild(row);
     }
     tbl.appendChild(tblBody);
@@ -78,21 +71,8 @@ async function clickCheckout() {
 // 注文明細の表示
 function make_order_detail_table(tablebodyid, amount, list) {
   let tableBody = document.getElementById(tablebodyid);
-  let lastRow = list[list.length-1];
-  let row = document.createElement("tr");
-  let cellText;
-  for (let i=0;i<lastRow.length;i++){
-    let cell = document.createElement("td");
-    if((typeof lastRow[i] === 'number') && (isFinite(lastRow[i]))){
-      cell.className = 'text-right';
-      cellText = document.createTextNode(lastRow[i].toLocaleString());
-    } else {
-      cell.className = 'text-center'
-      cellText = document.createTextNode(lastRow[i]);
-    }
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-  }
+  let oneRow = list[list.length-1];
+  row = make_table_row(oneRow);
   tableBody.appendChild(row);
   document.getElementById('show_total_amount').innerHTML = amount.toLocaleString();
   document.getElementById('code').value = '';
@@ -133,6 +113,25 @@ function check_item_in_master(val, master) {
     }
   }
   return flag;
+}
+
+//テーブルの行タグを生成する関数
+function make_table_row(list) {
+  let tr = document.createElement("tr");
+  let col_counts = list.length;
+  for (let i = 0; i < col_counts; i++){
+    let td = document.createElement("td");
+    if((typeof list[i] === 'number') && (isFinite(list[i]))){
+      td.className = 'text-right';
+      tdText = document.createTextNode(list[i].toLocaleString());
+    } else {
+      td.className = 'text-center';
+      tdText = document.createTextNode(list[i]);
+    }
+    td.appendChild(tdText);
+    tr.appendChild(td);
+  }
+  return tr;
 }
 
 // アラート

@@ -17,3 +17,7 @@ table > tbody > tr > th {
   font-size: 20px;
 
 }
+
+.btn {
+  width: 150px;
+}

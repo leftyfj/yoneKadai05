@@ -38,8 +38,8 @@ def show_order_detail_on_html():
   global total_amount
   global order_list_detail
   order_list_detail, total_amount = this_order.make_order_detail()
-  print(total_amount)
-  print(order_list_detail)
+  # print(total_amount)
+  # print(order_list_detail)
   return total_amount, order_list_detail
 
 @eel.expose
@@ -79,9 +79,9 @@ def make_transaction_log(detail,deposit,change):
     print('商品コード,', '商品名,', '単価,', '数量,', '金額', file=file)
     for row in detail:
       file.write(",".join(str(_) for _ in row) + '\n')
-      print(f'合計:{total_amount:,}円', file=file)
-      print(f'入金:{deposit:,}円', file=file)
-      print(f'釣り:{change:,}円' + '\n', file=file)
+    print(f'合計:{total_amount:,}円', file=file)
+    print(f'入金:{deposit:,}円', file=file)
+    print(f'釣り:{change:,}円' + '\n', file=file)
 
 ### メイン処理
 def main():
