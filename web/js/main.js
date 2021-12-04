@@ -94,6 +94,7 @@ function clear_data_on_table(){
   document.getElementById('show_total_amount').innerHTML ='';
   document.getElementById('deposit').value = ''
 }
+
 // バリデーション
 function check_blanc(place, val) {
   if (val == '') {

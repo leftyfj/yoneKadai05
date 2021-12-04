@@ -86,10 +86,6 @@ def quit_program():
   functions.make_log('プログラムを終了しました。')
   sys.exit()
   
-# def onClickWindow(page, sockets):
-#   text = f'{page}が閉じられました。プログラムを終了しました。'
-#   functions.make_log(text)
-#   sys.exit()
   
 ### メイン処理
 def main():
