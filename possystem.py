@@ -25,10 +25,10 @@ class Item:
         print('--------------------')
         print(' ')
 
-    def add_to_master(self):
+    def add_to_master(self, item_master_file_path=ITEMS_MASTER_PATH):
         row = [self.item_code, self.item_name, self.price]
 
-        list = ItemsMaster().get_master()
+        list = ItemsMaster(item_master_file_path).get_master()
         list.append(row)
 
         with open(ITEMS_MASTER_PATH, 'w', encoding='utf-8_sig', newline='') as file:
