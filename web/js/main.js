@@ -11,15 +11,6 @@ async function show_item_master() {
       tblBody.appendChild(row);
     }
     tbl.appendChild(tblBody);
-
-    item_table=document.getElementById('item_master_list');
-    cells = item_table.getElementsByTagName('td')
-    for(let i = 0; i < cells.length; i++) {
-      if(i % 3 == 2) {
-        console.log(cells[i]);
-        cells[i].className = 'text-right';
-      }
-    }
    }
 
 show_item_master();

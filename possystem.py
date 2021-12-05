@@ -56,9 +56,33 @@ class ItemsMaster:
             code = self.item_master[i][0]
             self.item_code_list.append(code)
         return self.item_code_list
-        
+    
+    def delete_item(self, item_code):
+        self.item_master = self.get_master()
+        items_count = len(self.item_master)
+        for i in range(0, items_count):
+            if item_code == self.item_master[i][0]:
+                self.item_master.pop(i)
+                break
+        with open(ITEMS_MASTER_PATH, 'w', encoding='utf-8_sig', newline='') as file:
+            writer = csv.writer(file, lineterminator='\n')
+            writer.writerows(self.item_master)
+            
+    def update_master(self, item_code, item_name, item_price):
+        self.item_master = self.get_master()
+        items_count = len(self.item_master)
+        for i in range(0, items_count):
+            if item_code == self.item_master[i][0]:
+                self.item_master[i][1] = item_name
+                self.item_master[i][2] = item_price
+                break
+        with open(ITEMS_MASTER_PATH, 'w', encoding='utf-8_sig', newline='') as file:
+            writer = csv.writer(file, lineterminator='\n')
+            writer.writerows(self.item_master)
+            
 ### オーダークラス
 class Order:
+    
     def __init__(self, item_master_file_path):
         self.item_order_list = []
         self.item_order_list_detail = []
