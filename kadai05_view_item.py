@@ -31,7 +31,13 @@ def check_duplicate(val):
     print(False)
     return False
     
-    
+
+@eel.expose
+def register_new_item(code, name, price, item_master_path =ITEMS_MASTER_PATH):
+  new_item = Item(code, name, price)
+  print(new_item.view_item())
+  list = ItemsMaster(item_master_path).get_master()
+  print(list)
 
 ### メイン処理
 def main():

@@ -43,8 +43,6 @@ function make_table_row(list) {
   return tr;
 }
 
-
-
 async function clickCU() {
 
   let item_code = document.getElementById('code').value;
@@ -64,6 +62,8 @@ async function clickCU() {
           item_price = Number(item_price);
           if(check_int('価格', item_price)) {
             console.log('全てOK');
+            await eel.register_new_item(item_code, item_name, item_price)();
+            // ここに商品マスタ登録
           }
         }
       }
