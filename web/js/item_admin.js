@@ -58,7 +58,17 @@ async function clickCreate() {
         if(check_blanc('価格', item_price)) {
           item_price = Number(item_price);
           if(check_int('価格', item_price)) {
-            await eel.register_new_item(item_code, item_name, item_price)();
+            text = '商品コード'+item_code+'\n'+'超品名'+item_name+'\n'+'価格'+item_price+'円\n上記の内容で登録しますか？';
+            ans = window.confirm(text);
+            if(ans){
+              await eel.register_new_item(item_code, item_name, item_price)();
+              //商品マスタをリロード
+              clear_data_on_table();
+              show_item_master();
+              document.getElementById('code').value = ''
+              document.getElementById('name').value = ''
+              document.getElementById('price').value = ''
+            }
           }
         }
       }
@@ -108,7 +118,11 @@ async function clickDelete() {
     if(result) {
        let ans = window.confirm("「商品コード:" + item_code + "」の商品を" + "削除しますか?");
        if(ans) {
-         await eel.delete_item_in_master(item_code)()
+          await eel.delete_item_in_master(item_code)()
+         //商品マスタをリロード
+          clear_data_on_table();
+          show_item_master();
+          document.getElementById('code_del').value = ''
        }
     } else {
       text = 'この商品コードの商品は商品マスターに登録されてません。'
