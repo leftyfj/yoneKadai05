@@ -18,13 +18,19 @@ global total_amount
 @eel.expose
 def get_item_master():
     global item_master
-    item_master = ItemsMaster(ITEMS_MASTER_PATH).get_master()
-    return item_master
+    try:
+      item_master = ItemsMaster(ITEMS_MASTER_PATH).get_master()
+      return item_master
+    except:
+      functions.has_error()
   
 @eel.expose
 def show_order_detail():
+  try:
     list, totalamount = Order(ITEMS_MASTER_PATH).make_order_detail()
     return list, totalamount
+  except:
+    functions.has_error()
 
 @eel.expose
 def add_order(item_code, quantity):
@@ -38,8 +44,11 @@ def add_order(item_code, quantity):
 def show_order_detail_on_html():
   global total_amount
   global order_list_detail
-  order_list_detail, total_amount = this_order.make_order_detail()
-  return total_amount, order_list_detail
+  try:
+    order_list_detail, total_amount = this_order.make_order_detail()
+    return total_amount, order_list_detail
+  except:
+    functions.has_error()
 
 @eel.expose
 def order_checkout(deposit):
@@ -63,23 +72,32 @@ def order_checkout(deposit):
 def cancel_order():
   global this_order
   global total_amount
-  this_order.cancel_order_all()
-  total_amount = ''
+  try:
+    this_order.cancel_order_all()
+    total_amount = ''
+  except:
+    functions.has_error()
 
 @eel.expose
 def init_order():
   global this_order
-  this_order = Order(ITEMS_MASTER_PATH)
+  try:
+    this_order = Order(ITEMS_MASTER_PATH)
+  except:
+    functions.has_error()
   
 @eel.expose
 def make_transaction_log(detail,deposit,change):
-  with open(TRANSACTION_FILE_PATH, 'a', encoding='utf-8_sig', newline='\n') as file:
-    print('商品コード,', '商品名,', '単価,', '数量,', '金額', file=file)
-    for row in detail:
-      file.write(",".join(str(_) for _ in row) + '\n')
-    print(f'合計:{total_amount:,}円', file=file)
-    print(f'入金:{deposit:,}円', file=file)
-    print(f'釣り:{change:,}円' + '\n', file=file)
+  try:
+    with open(TRANSACTION_FILE_PATH, 'a', encoding='utf-8_sig', newline='\n') as file:
+      print('商品コード,', '商品名,', '単価,', '数量,', '金額', file=file)
+      for row in detail:
+        file.write(",".join(str(_) for _ in row) + '\n')
+      print(f'合計:{total_amount:,}円', file=file)
+      print(f'入金:{deposit:,}円', file=file)
+      print(f'釣り:{change:,}円' + '\n', file=file)
+  except:
+    functions.has_error()
 
 @eel.expose
 def quit_program():
@@ -104,7 +122,6 @@ def main():
     this_order = Order(ITEMS_MASTER_PATH)
     
     eel.start("index.html", size=(900,600))
-
     
   except:     
     print('操作に誤りがありました。終了します。')

@@ -139,13 +139,12 @@ function clear_data_on_table(){
     tableElm.deleteRow(i);
   }
 }
-// async function check_duplicate(val) {
-//   let res = await eel.check_duplicate(val)();
-//   console.log(res);
-//   return res
-// }
 
+//アプリ終了
+function clickQuit(){
+  eel.quit_program();
 
+ }
 
 // バリデーション
 function check_blanc(place, val) {

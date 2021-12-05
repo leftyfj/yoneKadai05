@@ -14,8 +14,3 @@ def has_error():
   make_log('例外発生')
   make_log(traceback.format_exc())
 
-# def input_error():
-#   text = '入力に誤りがあります。確認して下さい。'
-#   functions.make_log('例外発生')
-#   functions.make_log(traceback.format_exc())
-#   eel.alertJs(text)
