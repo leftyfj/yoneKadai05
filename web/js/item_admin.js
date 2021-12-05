@@ -143,7 +143,8 @@ function clear_data_on_table(){
 //アプリ終了
 function clickQuit(){
   eel.quit_program();
-
+  text = '終了しました。ブラウザを閉じて下さい。'
+  alertJs(text);
  }
 
 // バリデーション
